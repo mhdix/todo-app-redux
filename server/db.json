@@ -1,3 +1,16 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "eae2",
+      "text": "todo1",
+      "complated": false,
+      "createdAt": "2025-02-02T14:13:37.621Z"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "mahdi"
+    }
+  ]
 }

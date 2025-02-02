@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "./App.css";
 import TodoAdd from "./components/TodoAdd";
 import TodoList from "./components/TodoList";
+import Login from "./components/Login";
+import Users from "./components/Users";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
       <Routes>
         <Route path="/" element={<TodoList />} />
         <Route path="/add" element={<TodoAdd />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </>
   );
