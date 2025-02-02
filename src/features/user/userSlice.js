@@ -19,7 +19,7 @@ const getAsyncUser = createAsyncThunk(
 
 const initialState = {
   loading: false,
-  users: [],
+  user: [],
   error: null,
 };
 

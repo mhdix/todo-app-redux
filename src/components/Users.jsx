@@ -4,13 +4,12 @@ import { getAsyncUser } from "../features/user/userSlice";
 
 const Users = () => {
   const { users, loading, error } = useSelector((state) => state.user);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAsyncUser());
   }, [dispatch]);
-
-  console.log(users);
 
   return (
     <div>
@@ -19,7 +18,7 @@ const Users = () => {
       ) : error ? (
         <p>{error}</p>
       ) : users ? (
-        users.map((item) => <p key={item}>{item.name}</p>)
+        users.map((item, index) => <p key={index}>{item.name}</p>)
       ) : null}
     </div>
   );
