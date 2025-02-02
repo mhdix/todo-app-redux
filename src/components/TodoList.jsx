@@ -20,7 +20,6 @@ const TodoList = () => {
   const handleDelete = (item) => {
     dispatch(deleteAsyncTodo(item));
   };
-  console.log(todo);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -36,9 +35,6 @@ const TodoList = () => {
         <>
           <div className="bg-white p-4 rounded-lg shadow-md mb-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-800">
-                لیست کارها
-              </h2>
               <div className="flex space-x-4 rtl:space-x-reverse">
                 <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
                   <span>تعداد کل: {todo.length}</span>
@@ -49,28 +45,19 @@ const TodoList = () => {
                   </span>
                 </div>
               </div>
+              <h2 className="text-xl font-semibold text-gray-800">
+                لیست کارها
+              </h2>
             </div>
           </div>
           <div className="space-y-4">
-            {todo.map((item) => (
+            {todo.map((item, index) => (
               <div
                 key={item.id}
                 className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <p
-                      className={`text-lg ${
-                        item.complated
-                          ? "line-through text-gray-500"
-                          : "text-gray-800"
-                      }`}
-                    >
-                      {item.text}
-                    </p>
-                    <p className="text-sm text-gray-500">شناسه: {item.id}</p>
-                  </div>
-                  <div className="flex items-center space-x-4 rtl:space-x-reverse">
+                  <div className="flex items-center flex-1 space-x-4 rtl:space-x-reverse">
                     <label className="inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
@@ -97,6 +84,18 @@ const TodoList = () => {
                         />
                       </svg>
                     </button>
+                  </div>
+                  <div className="flex-">
+                    <p
+                      className={`text-lg text-end text-ellipsis ${
+                        item.complated
+                          ? "line-through text-gray-500"
+                          : "text-gray-800"
+                      }`}
+                    >
+                      {item.text}
+                    </p>
+                    <p className="text-sm text-gray-500 text-end">شاره: {index +1}</p>
                   </div>
                 </div>
               </div>

@@ -21,7 +21,7 @@ const TodoAdd = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-end">
           افزودن کار جدید
         </h2>
 
@@ -35,7 +35,7 @@ const TodoAdd = () => {
           <div>
             <label
               htmlFor="todo"
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-bold mb-2 text-end"
             >
               عنوان کار
             </label>
@@ -44,7 +44,7 @@ const TodoAdd = () => {
               id="todo"
               value={addTodo}
               onChange={(e) => setAddTodo(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg text-end focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors duration-200"
               placeholder="کار جدید خود را وارد کنید..."
               disabled={loading}
             />

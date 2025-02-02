@@ -41,7 +41,6 @@ const toggleAsyncTodo = createAsyncThunk(
 const addAsyncTodo = createAsyncThunk(
   "addTodo/addAsyncTodo",
   async (todoData, { rejectWithValue }) => {
-    console.log(todoData);
     try {
       const response = await api.post("/todos", {
         text: todoData,

@@ -1,3 +1,14 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "a99c",
+      "text": "تودو اول",
+      "complated": false
+    },
+    {
+      "id": "de61",
+      "text": "کار اول مهمه ",
+      "complated": false
+    }
+  ]
 }
