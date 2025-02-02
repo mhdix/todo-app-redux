@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import "./App.css";
 import TodoAdd from "./components/TodoAdd";
 import TodoList from "./components/TodoList";
-import Login from "./components/Login";
+// import Login from "./components/Login";
 import Users from "./components/Users";
+import RegisterForm from "./components/RegisterForm";
 
 function App() {
   return (
@@ -37,13 +38,21 @@ function App() {
                 </svg>
               </Link>
             </div>
+            <div className="flex items-center space-x-4">
+              <Link
+                to="/users"
+                className="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                لیست کاربران
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
       <Routes>
         <Route path="/" element={<TodoList />} />
         <Route path="/add" element={<TodoAdd />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterForm />} />
         <Route path="/users" element={<Users />} />
       </Routes>
     </>

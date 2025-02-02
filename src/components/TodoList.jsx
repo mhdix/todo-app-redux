@@ -29,7 +29,6 @@ const TodoList = () => {
   const getSortedTodos = () => {
     if (!todo || todo.length === 0) return [];
 
-    console.log("Before sort:", todo); // برای دیباگ
 
     const sortedTodos = [...todo].sort((a, b) => {
       if (sortType === "latest") {
@@ -39,15 +38,8 @@ const TodoList = () => {
       }
     });
 
-    console.log("After sort:", sortedTodos); // برای دیباگ
     return sortedTodos;
   };
-
-  // برای دیباگ
-  useEffect(() => {
-    console.log("Current sort type:", sortType);
-    console.log("Current todos:", todo);
-  }, [sortType, todo]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -140,19 +132,19 @@ const TodoList = () => {
                       </svg>
                     </button>
                   </div>
-                  <div className="flex-">
-                    <p>
-                      تاریخ :{" "}
-                      {format(item.createdAt, "yyy/MM/dd", { locale: faIR })}
-                    </p>
+                  <div className="flex-1">
                     <p
-                      className={`text-lg text-end text-ellipsis ${
+                      className={`text-lg text-end mb-3 text-ellipsis ${
                         item.complated
                           ? "line-through text-gray-500"
                           : "text-gray-800"
                       }`}
                     >
                       {item.text}
+                    </p>
+                    <p className="text-sm text-gray-500 text-end">
+                      تاریخ :{" "}
+                      {new Date(item.createdAt).toLocaleDateString("fa-IR")}
                     </p>
                     <p className="text-sm text-gray-500 text-end">
                       شاره: {index + 1}
