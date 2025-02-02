@@ -1,5 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { faIR } from "date-fns/locale";
+import { format } from "date-fns";
 import {
   deleteAsyncTodo,
   getAsyncTodo,
@@ -7,23 +9,49 @@ import {
 } from "../features/todo/todoSlice";
 
 const TodoList = () => {
-  const { todo, laoding, error } = useSelector((state) => state.todo);
+  const [sortType, setSortType] = useState("latest");
+  const { todo, loading, error } = useSelector((state) => state.todo);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAsyncTodo());
   }, [dispatch]);
 
-  const handleToggle = (id) => {
-    dispatch(toggleAsyncTodo(id));
+  const handleToggle = (todo) => {
+    dispatch(toggleAsyncTodo(todo));
   };
-  const handleDelete = (item) => {
-    dispatch(deleteAsyncTodo(item));
+
+  const handleDelete = (todo) => {
+    dispatch(deleteAsyncTodo(todo));
   };
+
+  // تابع سورت کردن داده‌ها با لاگ برای دیباگ
+  const getSortedTodos = () => {
+    if (!todo || todo.length === 0) return [];
+
+    console.log("Before sort:", todo); // برای دیباگ
+
+    const sortedTodos = [...todo].sort((a, b) => {
+      if (sortType === "latest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+    });
+
+    console.log("After sort:", sortedTodos); // برای دیباگ
+    return sortedTodos;
+  };
+
+  // برای دیباگ
+  useEffect(() => {
+    console.log("Current sort type:", sortType);
+    console.log("Current todos:", todo);
+  }, [sortType, todo]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl">
-      {laoding ? (
+      {loading ? (
         <div className="flex justify-center items-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
@@ -31,7 +59,7 @@ const TodoList = () => {
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
           <p>{error}</p>
         </div>
-      ) : todo ? (
+      ) : todo && todo.length > 0 ? (
         <>
           <div className="bg-white p-4 rounded-lg shadow-md mb-6">
             <div className="flex justify-between items-center">
@@ -50,8 +78,35 @@ const TodoList = () => {
               </h2>
             </div>
           </div>
+          <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex space-x-4 rtl:space-x-reverse">
+                <button
+                  onClick={() => setSortType("latest")}
+                  className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                    sortType === "latest"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  جدیدترین
+                </button>
+                <button
+                  onClick={() => setSortType("earliest")}
+                  className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                    sortType === "earliest"
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  قدیمی‌ترین
+                </button>
+              </div>
+              <span className="text-gray-600">مرتب‌سازی:</span>
+            </div>
+          </div>
           <div className="space-y-4">
-            {todo.map((item, index) => (
+            {getSortedTodos().map((item, index) => (
               <div
                 key={item.id}
                 className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200"
@@ -86,6 +141,10 @@ const TodoList = () => {
                     </button>
                   </div>
                   <div className="flex-">
+                    <p>
+                      تاریخ :{" "}
+                      {format(item.createdAt, "yyy/MM/dd", { locale: faIR })}
+                    </p>
                     <p
                       className={`text-lg text-end text-ellipsis ${
                         item.complated
@@ -95,7 +154,9 @@ const TodoList = () => {
                     >
                       {item.text}
                     </p>
-                    <p className="text-sm text-gray-500 text-end">شاره: {index +1}</p>
+                    <p className="text-sm text-gray-500 text-end">
+                      شاره: {index + 1}
+                    </p>
                   </div>
                 </div>
               </div>

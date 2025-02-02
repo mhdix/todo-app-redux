@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   todo: [],
   error: null,
+  date: null,
 };
 
 const api = axios.create({
@@ -45,6 +46,7 @@ const addAsyncTodo = createAsyncThunk(
       const response = await api.post("/todos", {
         text: todoData,
         complated: false,
+        createdAt: new Date().toISOString(),
       });
       return response.data;
     } catch (error) {
@@ -64,6 +66,17 @@ const deleteAsyncTodo = createAsyncThunk(
     }
   }
 );
+
+// const sortAsyncTodo = createAsyncThunk(
+//   "todo/sortAsyncTodo",
+//   async (todo, {rejectWithValue} ) => {
+//     try {
+//       const todos = api.get('todos')
+//     } catch (error) {
+//       return rejectWithValue(error.message)
+//     }
+//   }
+// )
 const todoSlice = createSlice({
   name: "todo",
   initialState,
@@ -96,6 +109,7 @@ const todoSlice = createSlice({
         state.loading = false;
         state.error = false;
         state.todo.push(action.payload);
+        state.date = new Date().toISOString();
       })
       .addCase(addAsyncTodo.rejected, (state, action) => {
         state.loading = false;
